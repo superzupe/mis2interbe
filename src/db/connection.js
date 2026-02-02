@@ -5,7 +5,7 @@ let connection;
 
 const getConnection = async () => {
   if (!connection) {
-    connection = await mysql.createConnection(config);
+    connection = await mysql.createPool(config);
   }
   return connection;
 };

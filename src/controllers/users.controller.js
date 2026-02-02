@@ -17,7 +17,7 @@ const getAllUsers = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User berhasil diambil",
       data: users,
     });
@@ -37,7 +37,7 @@ const getUserById = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User berhasil diambil",
       data: user,
     });
@@ -52,7 +52,7 @@ const createUser = async (req, res, next) => {
     const { nama_lengkap, email, password } = req.body;
 
     if (!nama_lengkap || !email || !password) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "nama lengkap, email, dan password harus diisi",
         data: null,
       });
@@ -60,7 +60,7 @@ const createUser = async (req, res, next) => {
 
     const result = await createUserModel(req.body);
 
-    res.status(201).json({
+   return res.status(201).json({
       message: "User berhasil dibuat",
       data: {
         id: result.id, //pakai id dari model
@@ -84,7 +84,7 @@ const updateUser = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({
+   return res.status(200).json({
       message: "User berhasil diupdate",
       data: {
         id: req.params.id,
@@ -102,12 +102,12 @@ const deleteUser = async (req, res, next) => {
     const result = await deleteUserModel(req.params.id)
 
     if (result.affectedRows === 0) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "User tidak ditemukan"
       })
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User berhasil dihapus"
     })
   } catch (err) {
